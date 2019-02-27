@@ -1,33 +1,21 @@
 {
-  "name": "travellingapp",
-  "version": "1.0.0",
-  "description": "Mean Stack application to book tickets online for bus and hotels etc.",
-  "main": "server.js",
+  "name": "myappserver",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/madhujayavarapu/travellingApp.git"
+    "start": "./bin/www"
   },
   "dependencies": {
-    "bcryptjs": "*",
     "body-parser": "*",
-    "cors": "*",
-    "express": "*",
-    "jsonwebtoken": "*",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
     "mongoose": "*",
-    "mongoose-transactions": "^1.1.1",
-    "multer": "^1.4.1",
+    "morgan": "~1.9.0",
+    "nodemailer": "^5.1.1",
     "nodemon": "^1.18.4",
-    "passport": "*",
-    "passport-jwt": "*",
-    "request": "^2.88.0"
-  },
-  "author": "Madhu, Yogesh",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/madhujayavarapu/travellingApp/issues"
-  },
-  "homepage": "https://github.com/madhujayavarapu/travellingApp#readme"
+    "otp-generator": "^1.1.0"
+  }
 }
