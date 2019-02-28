@@ -30,4 +30,8 @@ export class UserService {
   validateOtp(postData): Observable<any> {
     return this.http.post(URL+"", postData, {headers: this.getHeaders()}).pipe((map((res) => res.json())));
   }
+
+  verifyUsername(postData): Observable<any> {
+    return this.http.post(URL+"verifyUsername", postData, {headers: this.getHeaders()}).pipe((map((res) => res.json())));    
+  }
 }

@@ -1,0 +1,24 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Register</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item class="field">
+        <ion-label position="floating">Username</ion-label>
+        <ion-input readonly [(ngModel)]="username" name="username"></ion-input>
+      </ion-item>
+      <ion-note class="note">You will get an OTP to your mail.</ion-note>
+
+      <ion-item class="field" *ngIf="sentOtp">
+        <ion-label position="floating">OTP</ion-label>
+        <ion-input [(ngModel)]="otp" name="otp"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

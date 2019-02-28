@@ -78,7 +78,7 @@ export class LoginPage {
   }
 
   register() {
-    this.router.navigate(['','register']);
+    this.router.navigate(['','verify-otp']);
   }
 
 }
