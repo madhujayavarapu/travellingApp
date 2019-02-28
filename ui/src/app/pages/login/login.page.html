@@ -1,0 +1,23 @@
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Login</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item class="field">
+        <ion-label position="floating">Username</ion-label>
+        <ion-input [(ngModel)]="username" name="username"></ion-input>
+      </ion-item>
+      <ion-item class="field">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+      </ion-item>
+      <div style="padding-top:10px"></div>
+      <ion-button expand="full" fill="solid" shape="round" color="secondary" [disabled]="!isValidCredentials()" (click)="authenticateUser()">Login</ion-button>
+      <div style="padding-top:10px"></div>      
+      <ion-text class="note" color="warning" (click)="forgotPassword()">Forgot Password ?<b> Need Help</b></ion-text>
+      <div style="padding-top:10px"></div>
+      <ion-text class="note" color="warning" (click)="register()">New User ? <b>Click here to Sign Up</b></ion-text>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

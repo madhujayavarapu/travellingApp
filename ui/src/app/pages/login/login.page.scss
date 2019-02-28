@@ -1,0 +1,29 @@
+ion-content{
+  --background: url('https://png.pngtree.com/thumb_back/fh260/back_pic/00/04/82/235624ffcf6f868.jpg') no-repeat center center  / cover ;
+  --background-size: cover
+}
+
+ion-card{
+  --background: rgba(#ffffff, 0.2);
+}
+ion-card-title{
+  --color: #ffffff;
+  text-align: center;
+  bottom: 0;
+}
+
+.submitButton{
+  --background: rgba(#ffffff, 0.2);
+  --border-color: #ffffff;
+  --padding-top: 20px;
+  --highlight-color-focused: #ffffff;
+  width: 100%;
+}
+
+.field{
+  --background: rgba(#ffffff, 0.2);
+  --border-color: #ffffff;
+  --background-focused: rgba(#ffffff, 0.1);
+  --color: #ffffff;
+  --inner-padding-top: 0px;
+}
