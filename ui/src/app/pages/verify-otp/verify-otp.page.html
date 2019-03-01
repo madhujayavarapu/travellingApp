@@ -13,8 +13,14 @@
         <ion-label position="floating">Username</ion-label>
         <ion-input readonly [(ngModel)]="username" name="username"></ion-input>
       </ion-item>
-      <ion-note class="note">You will get an OTP to your mail.</ion-note>
-
+      <br/>
+      <ion-note class="note" color="warning">You will get an OTP to your username.</ion-note>
+      <br/>
+      <ion-button expand="full" fill="solid" shape="round" color="secondary" 
+        [disabled]="!isValidUsername()" (click)="verifyUsername()">Send OTP</ion-button>
+      <!-- <ion-item>
+        <ion-button color="success" fill="outline" shape="round" expand="block">Sent OTP</ion-button>
+      </ion-item> -->
       <ion-item class="field" *ngIf="sentOtp">
         <ion-label position="floating">OTP</ion-label>
         <ion-input [(ngModel)]="otp" name="otp"></ion-input>

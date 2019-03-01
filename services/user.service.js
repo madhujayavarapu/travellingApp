@@ -1,13 +1,12 @@
 const express = require('express');
 const models = require('../models/user');
-var otpGenerator = require('otp-generator');
-var nodemailer = require("nodemailer");
 const validater = require('./validater.service');
 const utils = require('./utils.service');
+const moment = require('moment');
+const projConstants = require('../constants/proj.constant');
 
 var service = {
     insertuser: insertuser,
-    generateotp:generateotp,
     verifyUsername: verifyUsername,
     validateOTP: validateOTP
 }
@@ -19,23 +18,19 @@ function verifyUsername(req, res, next) {
   let usernameType = req.body.usernameType;
   if(!!username && validater.validateUsername(username, usernameType)){
     let otp = utils.generateOtp(6, false, false, false);
-
-    // if(usernameType == 'mail'){
-    //   let result = utils.sendSms('otp', username, otp);
-    //   if(result) {
-    //     res.json({status: true, message: 'OTP Sent to username'});
-    //   }else {
-    //     res.json({status: false, message: 'Failed to Send to SMS'});
-    //   }
-    // }else if(usernameType == 'phone') {
-    //   let result = utils.sendMail('otp', username, otp);
-    //   if(result) {
-    //     res.json({status: true, message: 'OTP Sent to username'});
-    //   }else {
-    //     res.json({status: false, message: 'Failed to Send to OTP to Mail'});
-    //   }
-    }
-    res.json({status: true, message: 'Ok Valid Username', otp: otp});
+    let service = usernameType == 'mobile' ? utils.sendSms : utils.sendMail;
+    models.OtpUser.findOneAndUpdate({username: username}, {otp: otp, timestamp: moment()}, {upsert: true, new: true, setDefaultsOnInsert: true}, (err, isSaved) => {
+      if(err)
+        res.json({status: false, msg: 'Something went wrong while saving otp to db'});
+      else if(isSaved){
+        let result = service('otp', username, otp);
+        if(result){
+          res.json({status: true, msg: 'OTP sent successfully..details saved in the collection', otp: otp});          
+        }else{
+          res.json({status: false, msg: 'Something went wrong while sending otp to your username', otp: otp});
+        }
+      }
+    })
   }else{
     res.json({status: true, message: 'Username is not valid'});
   }
@@ -43,7 +38,24 @@ function verifyUsername(req, res, next) {
 
 function validateOTP(req, res, next) {
   let username = req.body.username;
-  let otp = req.body.otp;
+  let enteredOtp = req.body.otp;
+  models.OtpUser.findOne({username: username}, (err, userDetails) => {
+    if(err){
+      res.json({status: false, message: 'Some error came',error: err});
+    }else if(userDetails != null && !!userDetails){
+      if(enteredOtp === userDetails.otp){
+        if(utils.diffBwTimestamps(userDetails.timestamp, moment(), 'minutes') <= projConstants.OTP_EXPIRE_TIME){
+          res.json({status: true, message: 'valid otp and in time..vefied username'});
+        }else{
+          res.json({status: true, message: 'OTP time expired'});
+        }
+      }else{
+        res.json({status: true, message: 'OTP is not valid'});
+      }
+    }else{
+      res.json({status: false, message: 'user not found in db'});
+    }
+  })
 }
 
 function insertuser(req, res, next){
@@ -56,17 +68,18 @@ function insertuser(req, res, next){
     models.User.findOne({username:req.body.username},(err,data) =>{
       if(err){
         console.log(err);
+        res.json({status: false, message:'Something went wrong..please try again', error: err});
       }else{
         if(!data){
           userdetail.save(userdetail,(err,result) => {
             if(err){
                 console.log(err);
-            }else{
-            res.json({
-                status: true,
-                "msg": "User added successfully"
-            })
-          }
+            }else if(!!result){
+              res.json({
+                  status: true,
+                  "msg": "User added successfully"
+              })
+            }
           })
         }else{
           res.json({
@@ -75,91 +88,5 @@ function insertuser(req, res, next){
           })
         }
       }
-
     })
-
-}
-
-function generateotp(req, res, next){
-  const otp = otpGenerator.generate(6, { upperCase: false, specialChars: false ,alphabets:false});
-  const type = req.body.type;
-    var generateotp = new models.OtpUser({
-      "username" : req.body.username,
-      "otp" : otp
-    });
-    models.OtpUser.findOne({username:req.body.username},(err,data) =>{
-      if(err){
-        console.log(err);
-      }else{
-        if(data){
-          models.OtpUser.update({"username":req.body.username},{$set:{'otp':otp}},(err,result) => {
-           if(err){
-               console.log(err);
-           }else{
-             if(type === "email"){
-             var smtpTransport = nodemailer.createTransport({
-                service: "gmail",
-                auth: { 
-                    user: "SENDER_MAIL",
-                    pass: "SENDER_MAIL_PASSWORD"
-                }
-             });
-             smtpTransport.sendMail({
-             from: "SENDER_MAIL", // sender address
-             to: req.body.username, // comma separated list of receivers
-             subject: "Testing sending using gmail", // Subject line
-             text: otp // plaintext body
-             }, function(error, response){
-                 if(error){
-                     console.log(error);
-                 }else{
-                   res.json({
-                       status: true,
-                       "msg": "otp send successfully"
-                   })
-                 }
-             });
-           }else{
-             //for mobile otp code
-           }
-         }
-         })
-        }else{
-          generateotp.save(generateotp,(err,result) => {
-            if(err){
-                console.log(err);
-            }else{
-                if(type === "email"){
-                  var smtpTransport = nodemailer.createTransport({
-                     service: "gmail",
-                     auth: {
-                         user: "",
-                         pass: ""
-                     }
-                  });
-                  smtpTransport.sendMail({
-                  from: "biradaryogesh9@gmail.com", // sender address
-                  to: req.body.username, // comma separated list of receivers
-                  subject: "Testing sending using gmail", // Subject line
-                  text: otp // plaintext body
-                  }, function(error, response){
-                      if(error){
-                          console.log(error);
-                      }else{
-                        res.json({
-                            status: true,
-                            "msg": "otp send successfully"
-                        })
-                      }
-                  });
-               }else{
-                 //for mobile otp
-               }
-             }
-          })
-        }
-      }
-
-    })
-
 }
