@@ -6,6 +6,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var indexRouter = require('./routes/busroutes');
 var usersRouter = require('./routes/users');
+var cors = require('cors')
 const routes = require('./routes/routes');
 const bodyParser = require('body-parser');
 
@@ -26,6 +27,7 @@ mongoose.connection.on('connected', () => {
 mongoose.connection.on('error', (err) => {
     console.log("Database Error "+err);
 })
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,8 +35,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+app.use('/', indexRouter);
+app.use('/api/user', usersRouter);
 app.use('/api',routes);
 
 // catch 404 and forward to error handler

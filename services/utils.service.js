@@ -26,31 +26,32 @@ function sendSms(type, mobileNumber, otp) {
   return true;
 }
 
-function sendMail(type, mail, otp) {
-  // var smtpTransport = nodemailer.createTransport({
-  //   service: "gmail",
-  //   auth: { 
-  //       user: "SENDER_MAIL",
-  //       pass: "SENDER_MAIL_PASSWORD"
-  //   }
-  // });
-  // smtpTransport.sendMail({
-  // from: "SENDER_MAIL", // sender address
-  // to: mail, // comma separated list of receivers
-  // subject: "Testing sending using gmail", // Subject line
-  // text: otp // plaintext body
-  // }, function(error, response){
-  //     if(error){
-  //         console.log(error);
-  //         return false;
-  //     }else{
-  //       // res.json({
-  //       //     status: true,
-  //       //     "msg": "otp send successfully"
-  //       // })
-  //       return true;
-  //     }
-  // });
+function sendMail(mail, otp) {
+  console.log(mail, otp);
+  var smtpTransport = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: "",
+        pass: ""
+    }
+  });
+  smtpTransport.sendMail({
+  from: "", // sender address
+  to: mail, // comma separated list of receivers
+  subject: "Testing sending using gmail", // Subject line
+  text: otp // plaintext body
+  }, function(error, response){
+      if(error){
+          console.log(error);
+          return false;
+      }else{
+        // res.json({
+        //     status: true,
+        //     "msg": "otp send successfully"
+        // })
+        return true;
+      }
+  });
   return true;
 }
 

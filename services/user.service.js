@@ -18,21 +18,27 @@ function verifyUsername(req, res, next) {
   let usernameType = req.body.usernameType;
   if(!!username && validater.validateUsername(username, usernameType)){
     let otp = utils.generateOtp(6, false, false, false);
-    let service = usernameType == 'mobile' ? utils.sendSms : utils.sendMail;
-    models.OtpUser.findOneAndUpdate({username: username}, {otp: otp, timestamp: moment()}, {upsert: true, new: true, setDefaultsOnInsert: true}, (err, isSaved) => {
+    let otpservice = usernameType == 'mobile' ? utils.sendSms : utils.sendMail;
+    var userdetailotp = new models.OtpUser({
+      "username" : username,
+      "otp" : otp,
+      "timestamp" :  moment(),
+      "gender":req.body.gender
+    });
+    userdetailotp.save(userdetailotp, (err, isSaved) => {
       if(err)
         res.json({status: false, msg: 'Something went wrong while saving otp to db'});
       else if(isSaved){
-        let result = service('otp', username, otp);
+        let result = otpservice(username, otp);
         if(result){
-          res.json({status: true, msg: 'OTP sent successfully..details saved in the collection', otp: otp});          
+          res.json({status: true, msg: 'OTP sent successfully..details saved in the collection'});
         }else{
-          res.json({status: false, msg: 'Something went wrong while sending otp to your username', otp: otp});
+          res.json({status: false, msg: 'Something went wrong while sending otp to your username'});
         }
       }
     })
   }else{
-    res.json({status: true, message: 'Username is not valid'});
+    res.json({status: false, message: 'Username is not valid'});
   }
 }
 
