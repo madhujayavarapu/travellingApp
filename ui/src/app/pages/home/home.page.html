@@ -1,0 +1,46 @@
+<app-header title="Home" [backBtn]="false"></app-header>
+<ion-content padding>
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-list-header>Header</ion-list-header>
+      
+        <ion-item>
+          <ion-label position="floating">Route</ion-label>
+          <ion-select placeholder="Where to ?" [(ngModel)]="wt" (ionChange)="routeChaged()">
+            <ion-select-option value="-1">Select Route</ion-select-option>
+            <ion-select-option value="{{option}}" *ngFor="let option of routes">{{option}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Bus Number</ion-label>
+          <ion-input type="text" [(ngModel)]="busNumber"></ion-input>
+        </ion-item>
+        <br/>
+        <ion-button expand="full" fill="solid" shape="round" color="primary" (click)="getSeatSelection()">
+          <ion-icon slot="start" name="search"></ion-icon>Search</ion-button>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-slides padding pager="true" [options]="slideOpts" #ads (ionSlidesDidLoad)="ads.startAutoplay()" loop='true' speed="500">
+    <ion-slide>
+      <ion-card padding>
+        <ion-card-title>Add 1</ion-card-title>
+        <ion-card-content>Image</ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card padding>
+        <ion-card-title>Add 2</ion-card-title>
+        <ion-card-content>Image</ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card padding>
+        <ion-card-title>Add 3</ion-card-title>
+        <ion-card-content>Image</ion-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

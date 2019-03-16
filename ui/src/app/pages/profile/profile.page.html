@@ -1,0 +1,20 @@
+<app-header title="Profile" [backBtn]="false"></app-header>
+<ion-content padding>
+    <app-refresher (onRefresh)="pageRefreshed($event)"></app-refresher>
+    <ion-card>
+      <ion-card-content *ngIf="!!userDetails">
+        <input type="file" style="display:none" (change)="updateProfilePic($event)" name="image" 
+           #fileButton/>
+        <ion-thumbnail size="50" (click)="chooseFile()">
+          <img [src]="userDetails.profilePic" />
+        </ion-thumbnail>
+        <br/>
+        <h1 class="text">Welcome <b>{{userDetails.displayName}}</b></h1><br/>
+        <ion-button color="primary" expand="block" shape="round" fill="outline" 
+        (click)="logOut()">Log Out</ion-button>
+      </ion-card-content>
+      <ion-card-content *ngIf="!userDetails">
+        <ion-skeleton-text width="500px" height="300px"></ion-skeleton-text>
+      </ion-card-content>
+    </ion-card>
+</ion-content>

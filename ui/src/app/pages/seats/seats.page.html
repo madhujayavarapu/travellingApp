@@ -1,0 +1,29 @@
+<app-header title="Select Seats" [link]="backBtnLink" backBtn="true"></app-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item padding *ngFor="let ticket of fairDetails">
+      <div class="row">
+        <div class="col-6" style="float: left; padding-right: 10px">
+          <input color="success" type="checkbox" [(ngModel)]="ticket.isChecked" (change)="changeSeatCount('checkbox',ticket)"/>
+          {{ticket.type}}
+        </div>
+        <div class="col-6" style="float: right;right:0">
+          <ion-button color="light" (click)="changeSeatCount('increment', ticket)">
+            <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+          </ion-button>&nbsp;&nbsp;
+          {{ticket.count}}&nbsp;&nbsp;
+          <ion-button color="light" (click)="changeSeatCount('decrement', ticket)">
+            <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>  
+    </ion-item>
+  </ion-list>
+  <ion-text color="danger" class="total">
+    <span style="float: left">No.of Seats: {{numOfSeats}}</span>
+    <span style="float: right">Price: {{totalPrice}}/-</span>
+  </ion-text>
+  <br/>
+  <ion-button color="success" expand="full" fill="solid" shape="round" (click)="checkout()">Check Out</ion-button>
+</ion-content>

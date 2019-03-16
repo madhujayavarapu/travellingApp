@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../services/notifications/notification.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -16,18 +16,14 @@ export class LoginPage {
   password: string;
 
   constructor(
-    // private userSrv: UserService,
+    private userSrv: UserService,
     private router: Router,
     private notificationsSrv: NotificationService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private navCtrl: NavController
     ) { }
 
   ionViewWillEnter(){
-    // this.userSrv.logOutUser().then(() => {
-
-    // }).catch((err) => {
-    //   this.notificationsSrv.showToastMessage(err.message, 'top');
-    // })
     this.username = null;
     this.password = null;
   }
@@ -40,7 +36,7 @@ export class LoginPage {
   async authenticateUser(){
     const loading = await this.loadingCtrl.create({
       message: 'Authenticating..Please wait',
-      spinner: 'dots'
+      spinner: 'bubbles'
     });
     loading.present();
     let { username, password } = this;
@@ -48,6 +44,11 @@ export class LoginPage {
       username,
       password
     }
+    
+    loading.dismiss();
+    this.navCtrl.pop();
+    this.navCtrl.navigateRoot('tabs');
+    // this.router.navigate(['tabs']);
     // this.userSrv.authenticateUser(credentials).then((res: any) => {
     //   if(res.success){
     //     loading.dismiss();
@@ -61,6 +62,11 @@ export class LoginPage {
     //   loading.dismiss();
     // })
     
+  }
+
+  resetFields() {
+    this.username = null;
+    this.password = null;
   }
 
   isValidCredentials() {

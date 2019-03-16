@@ -1,0 +1,35 @@
+<app-header [title]="selectedRoute" link="tabs,home" backBtn="true"></app-header>
+
+<ion-content padding>
+  <div *ngIf="noBuses" class="noData">
+    <ion-text color="danger">
+      No route found with bus number {{busNumber}}.please check the bus number, route and try again.
+    </ion-text>
+    <ion-button color="primary" shape="round" expand="full" fill="solid" [routerLink]="['','tabs','home']">Change Route</ion-button>
+  </div>
+  <div *ngIf="!noBuses">
+    <ion-list>
+      <ion-list-header>askdjkfl</ion-list-header>
+
+      <ion-item>
+        <ion-label>Boarding Point</ion-label>
+        <ion-select [(ngModel)]="boardingPoint" (ionChange)="getDroppingPoints()">
+          <ion-select-option value="-1">Select Boarding Point</ion-select-option>
+          <ion-select-option value="{{option}}" *ngFor="let option of boardingPoints">{{option}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Dropping Point</ion-label>
+        <ion-select [(ngModel)]="droppingPoint" [disabled]="boardingPoint == '-1'">
+          <ion-select-option value="-1">Select Dropping Point</ion-select-option>
+          <ion-select-option value="{{option}}" *ngFor="let option of droppingPoints">{{option}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <br/>
+      <ion-button expand="full" [disabled]="droppingPoint == -1" fill="solid" shape="round" color="primary" (click)="getSeats()">
+        <ion-icon slot="start" name="search"></ion-icon>Search
+      </ion-button>
+    </ion-list>
+  </div>
+</ion-content>

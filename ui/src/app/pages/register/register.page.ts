@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 // import { UserService } from '../../services/user/user.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from '../../services/notifications/notification.service';
 import { LoadingController } from '@ionic/angular';
 
@@ -24,9 +24,12 @@ export class RegisterPage {
   constructor(
     // private userSrv: UserService,
     private router: Router,
+    private route: ActivatedRoute,
     private notificationsSrv: NotificationService,
     private loadingCtrl: LoadingController
-  ) { }
+  ) {
+    this.username = route.params['username'];
+   }
 
   ionViewWillEnter() {
     this.resetAllFields();

@@ -14,6 +14,7 @@ import { SharedModule } from './utils/shared.module';
 // Services
 import { NotificationService } from './services/notifications/notification.service';
 import { UserService } from './services/user/user.service';
+import { BusService } from './services/bus.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { UserService } from './services/user/user.service';
     SplashScreen,
     UserService,
     NotificationService,
+    BusService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
