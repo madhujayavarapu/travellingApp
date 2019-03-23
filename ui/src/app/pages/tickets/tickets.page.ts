@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TicketsPage implements OnInit {
 
+  ticketColor: string = "primary";
   constructor() { }
 
   ngOnInit() {

@@ -33,7 +33,7 @@ export class SeatSelectionPage{
   }
 
   ionViewWillEnter() {
-    this.getBoardingPoints();
+    // this.getBoardingPoints();
     this.resetFields();
   }
 
@@ -63,20 +63,20 @@ export class SeatSelectionPage{
       boardingPoint: this.boardingPoint
     }
     this.droppingPoints = [];
-    this.busSrv.getDroppingPointsList(postData)
-    .subscribe((res) => {
-      if(res.status){
-        this.droppingPoints = res.data;
-        if(this.droppingPoints.indexOf(this.droppingPoint) == -1){
-          this.droppingPoint = "-1";
-        }
-      }else{
-        this.notificationSrv.showToastMessage(res.msg, 'top');
-      }
-    },(err)=> {
-      console.log(err);
-      this.notificationSrv.showToastMessage(err.msg, 'top');
-    })
+    // this.busSrv.getDroppingPointsList(postData)
+    // .subscribe((res) => {
+    //   if(res.status){
+    //     this.droppingPoints = res.data;
+    //     if(this.droppingPoints.indexOf(this.droppingPoint) == -1){
+    //       this.droppingPoint = "-1";
+    //     }
+    //   }else{
+    //     this.notificationSrv.showToastMessage(res.msg, 'top');
+    //   }
+    // },(err)=> {
+    //   console.log(err);
+    //   this.notificationSrv.showToastMessage(err.msg, 'top');
+    // })
   }
 
   async getSeats() {
@@ -89,7 +89,7 @@ export class SeatSelectionPage{
       // });
       // modal.present();
       // this.notificationSrv.showToastMessage("Need to show seat selection", 'top');
-      this.router.navigate(['','tabs','home', 'seats', this.selectedRoute, this.busNumber, this.boardingPoint, this.droppingPoint])
+      this.router.navigate(['','seats', this.selectedRoute, this.busNumber, this.boardingPoint, this.droppingPoint])
     }else{
       this.notificationSrv.showToastMessage("Please select boarding point and dropping point", 'top');
     }

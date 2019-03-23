@@ -1,4 +1,4 @@
-<app-header [title]="selectedRoute" link="tabs,home" backBtn="true"></app-header>
+<app-header [title]="selectedRoute" link="tabs,home" backBtn="true" [homeBtn]="true"></app-header>
 
 <ion-content padding>
   <div *ngIf="noBuses" class="noData">
@@ -9,13 +9,14 @@
   </div>
   <div *ngIf="!noBuses">
     <ion-list>
-      <ion-list-header>askdjkfl</ion-list-header>
+      <!-- <ion-list-header>askdjkfl</ion-list-header> -->
 
       <ion-item>
         <ion-label>Boarding Point</ion-label>
         <ion-select [(ngModel)]="boardingPoint" (ionChange)="getDroppingPoints()">
           <ion-select-option value="-1">Select Boarding Point</ion-select-option>
-          <ion-select-option value="{{option}}" *ngFor="let option of boardingPoints">{{option}}</ion-select-option>
+          <ion-select-option  value="kphb colony">kphb colony</ion-select-option>
+          <!-- <ion-select-option value="{{option}}" *ngFor="let option of boardingPoints">{{option}}</ion-select-option> -->
         </ion-select>
       </ion-item>
 
@@ -23,12 +24,14 @@
         <ion-label>Dropping Point</ion-label>
         <ion-select [(ngModel)]="droppingPoint" [disabled]="boardingPoint == '-1'">
           <ion-select-option value="-1">Select Dropping Point</ion-select-option>
-          <ion-select-option value="{{option}}" *ngFor="let option of droppingPoints">{{option}}</ion-select-option>
+          <ion-select-option value="nuzvid">Nuzvid</ion-select-option>
+          <!-- <ion-select-option value="{{option}}" *ngFor="let option of droppingPoints">{{option}}</ion-select-option> -->
         </ion-select>
       </ion-item>
       <br/>
-      <ion-button expand="full" [disabled]="droppingPoint == -1" fill="solid" shape="round" color="primary" (click)="getSeats()">
-        <ion-icon slot="start" name="search"></ion-icon>Search
+      <ion-button expand="full" [disabled]="droppingPoint == -1" fill="solid" shape="round" color="tertiary" (click)="getSeats()">
+        <!-- <ion-icon slot="start" name="search"></ion-icon> -->
+        Go
       </ion-button>
     </ion-list>
   </div>

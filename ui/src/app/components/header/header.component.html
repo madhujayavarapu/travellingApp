@@ -9,5 +9,15 @@
     <ion-title>
       {{title}}
     </ion-title>
+    <ion-buttons slot="end" *ngIf="!!homeBtn">
+      <ion-button (click)="goHome()">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="!!closeBtn">
+      <ion-button (click)="closeBtnClicked()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>

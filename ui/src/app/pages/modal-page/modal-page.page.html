@@ -1,12 +1,43 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="tertiary">
     <ion-title>Confirm Ticket Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal('cancel')">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-button expand="full" fill='solid' shape="round" color="success" (click)="closeModal('confirm')">Confirm Details</ion-button>
-
-  <ion-button expand="full" fill='solid' shape="round" color="danger" (click)="closeModal('cancel')">Cancel</ion-button>
+  <h2 class="text-center">{{route}}</h2>
+  <ion-list>
+    <ion-item>
+      <ion-text color="medium">Boarding Point</ion-text>
+      <h5 class="ticket-details-text" slot="end">{{boardingPoint}}</h5>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">Dropping Point</ion-text>
+      <h5 class="ticket-details-text" slot="end">{{droppingPoint}}</h5>
+    </ion-item>
+    <ion-item *ngFor="let ticket of fairDetails">
+      <ion-text color="medium">{{ticket.type}}</ion-text>
+      <h5 class="ticket-details-text" slot="end" *ngIf="ticket.isChecked">
+        {{ticket.count}} * {{ticket.price}} = {{ticket.count * ticket.price}}
+      </h5>
+      <h5 class="ticket-details-text" slot="end" *ngIf="!ticket.isChecked">-</h5>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">Total Number of Seats</ion-text>
+      <h5 class="ticket-details-text" slot="end">{{numOfSeats}}</h5>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">Total Price</ion-text>
+      <h2 slot="end" class="total-price">{{totalPrice}}/-</h2>
+    </ion-item>
+  </ion-list>
+  
+  <ion-button expand="full" fill='solid' shape="round" color="success" 
+    (click)="closeModal('confirm')">Confirm Details</ion-button>
 
 </ion-content>

@@ -52,7 +52,10 @@ export class HomePage {
 
   getSeatSelection() {
     if(this.wt != "-1" && !!this.busNumber && this.busNumber != ""){
-      this.router.navigate(['', 'tabs', 'home', 'seat-selection', this.wt, this.busNumber]);      
+      if(this.busNumber !== "AP16CY2872")
+        this.notificationSrv.showToastMessage('Please enter valid bus number', 'top');
+      else
+        this.router.navigate(['', 'seat-selection', this.wt, this.busNumber]);      
     }else {
       this.notificationSrv.showToastMessage('Please select route and bus number', 'top');
     }

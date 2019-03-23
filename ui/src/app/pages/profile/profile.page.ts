@@ -27,7 +27,7 @@ export class ProfilePage {
 
   getUserInfo() {
     this.userDetails = {
-      displayName: "madhu",
+      displayName: "Test User",
       profilePic: 'assets/images/default.jpeg'
     }
   }

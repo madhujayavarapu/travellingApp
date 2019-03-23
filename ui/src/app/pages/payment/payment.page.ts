@@ -10,7 +10,7 @@ export class PaymentPage {
 
   constructor(
     private router: Router
-  ) { }
+  ) {}
 
   paymentDone(){
     this.router.navigate(['', 'tabs', 'tickets']);

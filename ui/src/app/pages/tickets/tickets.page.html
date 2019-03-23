@@ -1,16 +1,30 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>Tickets</ion-title>
-  </ion-toolbar>
-</ion-header> -->
 <app-header title="Tickets" [backBtn]="false"></app-header>
 <ion-content padding>
-  <ion-card color="success">
-    <ion-card-title padding>
-      Ticket Info
+  <ion-text padding color="danger">Ticket not yet designed..!</ion-text>
+  <ion-card [color]="ticketColor" padding>
+    <ion-card-title>
+      Boarding Point -> Dropping Point
     </ion-card-title>
     <ion-card-content>
-      Ticket Details
+      <ion-list>
+        <ion-list-header [color]="ticketColor">Route</ion-list-header>
+        <ion-item [color]="ticketColor">
+          <ion-text color="light">Ticket No:- 23456789</ion-text>
+          <ion-text slot="end" color="light">2019-03-02 23:00:00</ion-text>
+        </ion-item>
+        <ion-item [color]="ticketColor">
+          <ion-text color="light">Half Tickets: </ion-text>
+          <h5 class="text-light" slot="end">2</h5>
+        </ion-item>
+        <ion-item [color]="ticketColor">
+          <ion-text color="light">Full Tickets: </ion-text>
+          <h5 class="text-light" slot="end">2</h5>
+        </ion-item>
+        <ion-item [color]="ticketColor">
+          <ion-text color="light">Senior Citizen Tickets: </ion-text>
+          <h5 class="text-light" slot="end">2</h5>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
   <ion-card color="danger">

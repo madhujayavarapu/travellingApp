@@ -14,13 +14,13 @@ export class ModalPagePage {
   @Input() droppingPoint: string;
   @Input() totalPrice: number;
   @Input() numOfSeats: number;
+  @Input() fairDetails: any;
 
   constructor(
     private modalCtrl: ModalController
   ) { }
 
   ionViewWillEnter() {
-    console.log(this.busNumber, this.route, this.droppingPoint, this.boardingPoint, this.totalPrice, this.numOfSeats);
   }
 
   closeModal(reason) {

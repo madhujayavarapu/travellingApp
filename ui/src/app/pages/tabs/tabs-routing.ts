@@ -8,14 +8,7 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full',},
-      { 
-        path: 'home',
-        children: [
-          {path: '', loadChildren: '../home/home.module#HomePageModule'},
-          { path: 'seat-selection/:route/:busNumber', loadChildren: '../seat-selection/seat-selection.module#SeatSelectionPageModule' },
-          { path: 'seats/:route/:busNumber/:boardingPoint/:droppingPoint', loadChildren: '../seats/seats.module#SeatsPageModule' }
-        ]
-      },
+      { path: 'home', loadChildren: '../home/home.module#HomePageModule'},
       { path: 'profile', loadChildren: '../profile/profile.module#ProfilePageModule' },
       { path: 'tickets', loadChildren: '../tickets/tickets.module#TicketsPageModule' }
     ]

@@ -45,9 +45,13 @@ export class LoginPage {
       password
     }
     
+    if(username == 'testuser@gmail.com' && password == 'test@123'){
+      this.navCtrl.pop();
+      this.navCtrl.navigateRoot('tabs');
+    }else{
+      this.notificationsSrv.showToastMessage('Username or password wrong','top');
+    }
     loading.dismiss();
-    this.navCtrl.pop();
-    this.navCtrl.navigateRoot('tabs');
     // this.router.navigate(['tabs']);
     // this.userSrv.authenticateUser(credentials).then((res: any) => {
     //   if(res.success){

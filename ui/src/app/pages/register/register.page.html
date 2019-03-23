@@ -11,13 +11,12 @@
       <ion-row>
         <ion-col size="6">
           <ion-item class="field">
-            <!-- <ion-label position="floating">Name</ion-label> -->
+            <ion-label position="floating">Name</ion-label>
             <ion-input [(ngModel)]="fullName" placeholder="Enter Name" name="name"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
           <ion-item class="field">
-            <!-- <ion-label></ion-label> -->
             <img [src]="maleImg" width="30" height="25" (click)="changeGender('M')" />
             <img [src]="femaleImg" width="30" height="25" (click)="changeGender('F')" />
           </ion-item>
@@ -33,7 +32,9 @@
       </ion-item>
       <div style="padding-top:10px"></div>
       <ion-button expand="full" fill="solid" shape="round" color="secondary" [disabled]="!isValidCredentials()"
-       (click)="registerUserDetails()">Sign Up</ion-button>
+       (click)="registerUserDetails()">
+       Sign Up
+      </ion-button>
       <div style="padding-top:10px"></div>
       <ion-text class="note" color="warning" (click)="gotoLogin()">Already Registered? <b>Click here to Log In</b></ion-text>
     </ion-card-content>

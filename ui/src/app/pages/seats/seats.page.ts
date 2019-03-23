@@ -20,6 +20,8 @@ export class SeatsPage {
   backBtnLink: string;
   numOfSeats: number = 0;
   totalPrice: number = 0;
+  catCardsDetails: any = [];
+  catCardsCount: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,8 +36,7 @@ export class SeatsPage {
     this.boardingPoint = route.snapshot.params['boardingPoint'];
     this.droppingPoint = route.snapshot.params['droppingPoint'];
 
-    this.backBtnLink = 'tabs,home,seat-selection,'+this.selectedRoute+","+this.busNumber;
-    console.log(this.backBtnLink);
+    this.backBtnLink = 'seat-selection,'+this.selectedRoute+","+this.busNumber;
   }
 
   ionViewWillEnter() {
@@ -54,44 +55,59 @@ export class SeatsPage {
       spinner: 'bubbles'
     });
     await loader.present();
-    this.busSrv.getFareDetailsForTrip(postData)
-    .subscribe((res) => {
+
+    let data = {
+      halfTicketPrice: 300,
+      fullTicketPrice: 450,
+      seniorCitizenPrice: 380
+    }
+    this.fairDetails = this.formatFairDetails(data);
+    setTimeout(() => {
       loader.dismiss();
-      if(!!res.status){
-        this.fairDetails = this.formatFairDetails(res.data);
-      }else{
-        this.notificationSrv.showToastMessage(res.msg,'top');
-      }
-    },(err) => {
-      loader.dismiss();
-      this.notificationSrv.showToastMessage(err.msg, 'top');
-    })
+    },500)
+    // this.busSrv.getFareDetailsForTrip(postData)
+    // .subscribe((res) => {
+    //   loader.dismiss();
+    //   if(!!res.status){
+    //     this.fairDetails = this.formatFairDetails(res.data);
+    //   }else{
+    //     this.notificationSrv.showToastMessage(res.msg,'top');
+    //   }
+    // },(err) => {
+    //   loader.dismiss();
+    //   this.notificationSrv.showToastMessage(err.msg, 'top');
+    // })
   }
 
   async checkout() {
-    const modal = await this.modalCtrl.create({
-      component: ModalPagePage,
-      componentProps: {
-        busNumber: this.busNumber,
-        route: this.selectedRoute,
-        boardingPoint: this.boardingPoint,
-        droppingPoint: this.droppingPoint,
-        numOfSeats: this.numOfSeats,
-        totalPrice: this.totalPrice
-      },
-      showBackdrop: true,
-      mode: 'md',
-      backdropDismiss: false
-    })
-
-    modal.onWillDismiss().then((data: any) => {
-      console.log('modal closed in seats page: ',data.data.isConfirmed);
-      if(data.data.isConfirmed)
-        this.router.navigate(['','payment', this.selectedRoute, this.busNumber, this.boardingPoint, this.droppingPoint, this.totalPrice, this.numOfSeats]);
-      else 
-        this.notificationSrv.showToastMessage('fuck...****','top');
-    })
-    return await modal.present();
+    if(this.numOfSeats > 0){
+      const modal = await this.modalCtrl.create({
+        component: ModalPagePage,
+        componentProps: {
+          busNumber: this.busNumber,
+          route: this.selectedRoute,
+          boardingPoint: this.boardingPoint,
+          droppingPoint: this.droppingPoint,
+          numOfSeats: this.numOfSeats,
+          totalPrice: this.totalPrice,
+          fairDetails: this.fairDetails
+        },
+        showBackdrop: true,
+        mode: 'md',
+        backdropDismiss: false
+      })
+  
+      modal.onWillDismiss().then((data: any) => {
+        console.log('modal closed in seats page: ',data.data.isConfirmed);
+        if(data.data.isConfirmed)
+          this.router.navigate(['','payment', this.selectedRoute, this.busNumber, this.boardingPoint, this.droppingPoint, this.totalPrice, this.numOfSeats]);
+        else 
+          this.notificationSrv.showToastMessage('Want to change tickets','top');
+      })
+      return await modal.present();
+    }else{
+      this.notificationSrv.showToastMessage('Please select atleast one ticket', 'top');
+    }
   }
 
   changeSeatCount(action, ticket){
@@ -115,6 +131,9 @@ export class SeatsPage {
       ticket.count = ticket.count > 0 ? ticket.count - 1 : 0;
       this.totalPrice = this.totalPrice > 0 ? this.totalPrice - ticket.price : 0;
       ticket.isChecked = ticket.count > 0 ? true : false;
+    }
+    if(ticket.type == 'Senior Citizen'){
+      this.catCardsCount = ticket.count;
     }
   }
 
