@@ -8,10 +8,28 @@ const projConstants = require('../constants/proj.constant');
 var service = {
     insertuser: insertuser,
     verifyUsername: verifyUsername,
-    validateOTP: validateOTP
+    validateOTP: validateOTP,
+    authenticateUser: authenticateUser
 }
 
 module.exports = service;
+
+function authenticateUser(req, res, next) {
+  let { username, password } = req.body;
+  if(!!username && !!password){
+    models.User.find({username: username, password: password}, (err, isValidUser) => {
+      if(err){
+        res.json({status: false, msg: 'Something went Wrong', error: err});
+      }else if(isValidUser.length > 0){
+        // need to send token here.
+        let {username, name, _id} = isValidUser[0];
+        res.json({status: true, user: {username, name, _id}});
+      }else{
+        res.json({status: false, msg: 'Invalid Credentials'});
+      }
+    })
+  }
+}
 
 function verifyUsername(req, res, next) {
   let username = req.body.username;

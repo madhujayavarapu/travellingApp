@@ -20,15 +20,15 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private notificationSrv: NotificationService,
+    // private statusBar: StatusBar,
+    // private notificationSrv: NotificationService,
     private router: Router
     // private network: Network,
     // private events: Events,
     // private networkGuard: NetworkGuard
   ) {
     this.initializeApp();
-    this.backBtnEvent();
+    // this.backBtnEvent();
   }
 
   backBtnEvent() {
@@ -36,7 +36,8 @@ export class AppComponent {
       if (this.router.url === '/tabs/home' || this.router.url === '/login') {
         if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
             // this.platform.exitApp(); // Exit from app
-            navigator['app'].exitApp(); // work for ionic 4
+            // navigator['app'].exitApp(); // work for ionic 4
+            
         } else {
             this.lastTimeBackPress = new Date().getTime();
         }
@@ -50,9 +51,16 @@ export class AppComponent {
     this.platform.ready().then(() => {
       // this.networkGuard.initializeNetworkEvents();
 
-      this.statusBar.styleDefault();
+      // this.statusBar.styleLightContent();
       this.splashScreen.hide();
 
+      // Network.onConnect().subscribe(() => {
+      //   this.notificationSrv.showToastMessage('Connected to Network', 5000);
+      // })
+
+      // Network.onDisconnect().subscribe(() => {
+      //   this.notificationSrv.showAlert('Network', 'Network Error', 'Please connect to network', ['Ok']);
+      // })
       // Offline event
       // this.events.subscribe('network:offline', () => {
       //   alert('network:offline ==> '+this.network.type);    

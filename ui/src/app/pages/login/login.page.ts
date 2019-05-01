@@ -45,27 +45,29 @@ export class LoginPage {
       password
     }
     
-    if(username == 'testuser@gmail.com' && password == 'test@123'){
-      this.navCtrl.pop();
-      this.navCtrl.navigateRoot('tabs');
-    }else{
-      this.notificationsSrv.showToastMessage('Username or password wrong','top');
-    }
-    loading.dismiss();
+    // if(username == 'testuser@gmail.com' && password == 'test@123'){
+    //   this.navCtrl.pop();
+    //   this.navCtrl.navigateRoot('tabs');
+    // }else{
+    //   this.notificationsSrv.showToastMessage('Username or password wrong','top');
+    // }
+    // loading.dismiss();
     // this.router.navigate(['tabs']);
-    // this.userSrv.authenticateUser(credentials).then((res: any) => {
-    //   if(res.success){
-    //     loading.dismiss();
-    //     this.notificationsSrv.showToastMessage('Welcome '+username, 'top');
-    //     this.router.navigate(['','tabs']);
-    //   }else{
-    //     loading.dismiss();
-    //   }
-    // }).catch((err) => {
-    //   this.notificationsSrv.showToastMessage(err.error.message, 'top');
-    //   loading.dismiss();
-    // })
-    
+    this.userSrv.authenticateUser(credentials).subscribe((res: any) => {
+      if(res.status){
+        loading.dismiss();
+        this.notificationsSrv.showToastMessage('Welcome '+res.user.name, 'top');
+        this.router.navigate(['','tabs']);
+      }else{
+        loading.dismiss();
+        this.notificationsSrv.showToastMessage(res.msg, 'top');
+      }
+      this.resetFields();
+    }, (err) => {
+      this.notificationsSrv.showToastMessage(err.message, 'top');
+      loading.dismiss();
+      this.resetFields();
+    });    
   }
 
   resetFields() {
