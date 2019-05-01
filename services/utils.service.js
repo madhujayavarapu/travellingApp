@@ -2,6 +2,8 @@ const express = require('express');
 const otpGenerator = require('otp-generator');
 const nodemailer = require("nodemailer");
 const moment = require('moment');
+var Client = require('node-rest-client').Client;
+var client = new Client();
 
 var service = {
   generateOtp: generateOtp,
@@ -23,7 +25,9 @@ function generateOtp(length, isUppercase, isAlphabates, isSpecialChars) {
 
 function sendSms(type, mobileNumber, otp) {
   console.log("need to send sms,and otp is", otp);
-  return true;
+  client.get("http://198.15.103.106/API/pushsms.aspx?loginID=INNOVATION&password=123456&mobile="+mobileNumber+"&text=Hi madhu sms is fine,Requested OTP is :"+otp+"&senderid=DEMOOO&route_id=1&Unicode=0", function (data, response) {
+});
+return true;
 }
 
 function sendMail(mail, otp) {

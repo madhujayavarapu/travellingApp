@@ -29,7 +29,7 @@ function verifyUsername(req, res, next) {
       if(err)
         res.json({status: false, msg: 'Something went wrong while saving otp to db'});
       else if(isSaved){
-        let result = otpservice(username, otp);
+        let result = otpservice(usernameType,username, otp);
         if(result){
           res.json({status: true, msg: 'OTP sent successfully..details saved in the collection'});
         }else{
