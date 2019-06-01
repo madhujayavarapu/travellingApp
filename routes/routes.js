@@ -3,6 +3,7 @@ var router = express.Router();
 
 const userSrv = require('../services/user.service');
 const busSrv = require('../services/busroutes.service');
+const paytm = require('../services/paymentservice');
 
 // Auth routes
 router.post('/verifyUsername', userSrv.verifyUsername);
@@ -18,5 +19,6 @@ router.post('/getBusDetails', busSrv.getBusDetails);
 router.post('/getBoardingPoints', busSrv.getBoardingPoints);
 router.post('/getDroppingPoints', busSrv.getDropptingPoints);
 router.post('/getFareDetailsForTrip', busSrv.getFareDetailsForTrip);
+router.post('/checksumpayment', paytm.generatechecksumpayment);
 
 module.exports = router;
