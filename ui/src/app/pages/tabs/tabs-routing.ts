@@ -10,7 +10,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full',},
       { path: 'home', loadChildren: '../home/home.module#HomePageModule'},
       { path: 'profile', loadChildren: '../profile/profile.module#ProfilePageModule' },
-      { path: 'tickets', loadChildren: '../tickets/tickets.module#TicketsPageModule' }
+      { path: 'tickets', loadChildren: '../tickets/tickets.module#TicketsPageModule' },
+      { path: 'about', loadChildren: '../about/about.module#AboutPageModule'}
     ]
   }
 ];

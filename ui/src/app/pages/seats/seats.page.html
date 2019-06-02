@@ -19,12 +19,12 @@
         </ion-button>
       </ion-buttons>
     </ion-item>
-    <ion-item>
-      <ion-label position="floating">Cat Card 1</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-    
   </ion-list>
   <br/>
+  <!-- <ion-list *ngIf="catCardsCount > 0">
+    <ion-item *ngFor='let carCard of catCardsCount'>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+  </ion-list> -->
   <ion-button color="tertiary" expand="full" fill="solid" shape="round" (click)="checkout()">Check Out</ion-button>
 </ion-content>

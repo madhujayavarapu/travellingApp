@@ -14,12 +14,12 @@
       </ion-item>
       <div style="padding-top:10px"></div>
       <ion-button expand="full" fill="solid" shape="round" color="secondary" [disabled]="!isValidCredentials()" (click)="authenticateUser()">Login</ion-button>
-      <div style="padding-top:10px"></div>  
+      <div style="padding-top:10px"></div>
       <!-- (click)="forgotPassword()"     -->
       <ion-text class="note" color="warning">Forgot Password ?<b> Need Help</b></ion-text>
       <div style="padding-top:10px"></div>
       <!-- (click)="register()" -->
-      <ion-text class="note" color="warning">New User ? <b>Click here to Sign Up</b></ion-text>
+      <ion-text class="note" color="warning" (click)="register()">New User ? <b>Click here to Sign Up</b></ion-text>
     </ion-card-content>
   </ion-card>
 </ion-content>

@@ -28,7 +28,8 @@ export class RegisterPage {
     private notificationsSrv: NotificationService,
     private loadingCtrl: LoadingController
   ) {
-    this.username = route.params['username'];
+    this.username = route.snapshot.params['username'];
+    console.log(this.username);
    }
 
   ionViewWillEnter() {
@@ -40,17 +41,17 @@ export class RegisterPage {
   }
 
   resetAllFields() {
-    this.username = null;
+    // this.username = null;
     this.password = null;
     this.fullName = null;
     this.confirmpwd = null;
-    this.gender = "";
+    this.gender = "-1";
   }
 
   isValidCredentials(){
     let {username, password, fullName, confirmpwd, gender} = this;
     if(!!username && username != '' && !!password && password != '' && !!fullName && fullName != ''
-     && !!confirmpwd && confirmpwd != '' && password == confirmpwd && !!gender && gender != ""){
+     && !!confirmpwd && confirmpwd != '' && password == confirmpwd && !!gender && gender != "-1"){
       return true;
     }
     return false;
@@ -70,7 +71,6 @@ export class RegisterPage {
     })
     this.loading.present();
     let {username, password, fullName, confirmpwd, gender} = this;
-    console.log(username, password, fullName, confirmpwd, gender);
     let obj = {
       username,
       password,
@@ -79,6 +79,7 @@ export class RegisterPage {
       gender
     }
     console.log(obj);
+    this.loading.dismiss();
     // this.userSrv.addUseDetails(obj).then((res) => {
     //   this.loading.dismiss();
     //   if(res){

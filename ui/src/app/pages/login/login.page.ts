@@ -24,13 +24,12 @@ export class LoginPage {
     ) { }
 
   ionViewWillEnter(){
-    this.username = null;
-    this.password = null;
+    this.userSrv.logout();
+    this.resetFields();
   }
 
   ionViewDidLeave(){
-    this.username = null;
-    this.password = null;
+    this.resetFields();
   }
 
   async authenticateUser(){
@@ -45,14 +44,6 @@ export class LoginPage {
       password
     }
     
-    // if(username == 'testuser@gmail.com' && password == 'test@123'){
-    //   this.navCtrl.pop();
-    //   this.navCtrl.navigateRoot('tabs');
-    // }else{
-    //   this.notificationsSrv.showToastMessage('Username or password wrong','top');
-    // }
-    // loading.dismiss();
-    // this.router.navigate(['tabs']);
     this.userSrv.authenticateUser(credentials).subscribe((res: any) => {
       if(res.status){
         loading.dismiss();
@@ -86,7 +77,7 @@ export class LoginPage {
   }
 
   forgotPassword() {
-    console.log("forgot password reset password");
+    console.log("need implement this functionality");
   }
 
   register() {

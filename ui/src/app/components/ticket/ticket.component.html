@@ -1,0 +1,55 @@
+<!-- <ion-list> -->
+  <!-- <ion-list-header [color]="color">Route</ion-list-header>
+  <ion-item [color]="color">
+    <ion-text color="light">Ticket No:- 23456789</ion-text>
+    <ion-text slot="end" color="light">2019-03-02 23:00:00</ion-text>
+  </ion-item>
+  <ion-item [color]="color">
+    <ion-text color="light">Half Tickets: </ion-text>
+    <h5 class="text-light" slot="end">2</h5>
+  </ion-item>
+  <ion-item [color]="color">
+    <ion-text color="light">Full Tickets: </ion-text>
+    <h5 class="text-light" slot="end">2</h5>
+  </ion-item>
+  <ion-item [color]="color">
+    <ion-text color="light">Senior Citizen Tickets: </ion-text>
+    <h5 class="text-light" slot="end">2</h5>
+  </ion-item> -->
+<!-- </ion-list> -->
+
+<!-- <ion-list> -->
+  
+  <!-- <ion-item *ngFor="let ticket of fairDetails">
+    <ion-text [color]="color">{{ticket.type}}</ion-text>
+    <h5 class="ticket-details-text" slot="end" *ngIf="ticket.isChecked">
+      {{ticket.count}} * {{ticket.price}} = {{ticket.count * ticket.price}}
+    </h5>
+    <h5 class="ticket-details-text" slot="end" *ngIf="!ticket.isChecked">-</h5>
+  </ion-item> -->
+  
+<!-- </ion-list> -->
+
+<ion-card [color]="ticket.color" *ngFor="let ticket of tickets;">
+  <ion-card-title padding style="text-align:center">
+    hyd - nzd
+  </ion-card-title>
+  <ion-card-content>
+    <ion-item [color]="ticket.color">
+      <ion-text color="medium">Boarding Point</ion-text>
+      <h2 class="ticket-details-text" slot="end">bording point</h2>
+    </ion-item>
+    <ion-item [color]="ticket.color">
+      <ion-text color="light">Dropping Point</ion-text>
+      <h2 class="ticket-details-text" slot="end">Dropping point</h2>
+    </ion-item>
+    <ion-item [color]="ticket.color">
+      <ion-text color="medium">Total Number of Seats</ion-text>
+      <h5 class="ticket-details-text" slot="end">10</h5>
+    </ion-item>
+    <ion-item [color]="ticket.color">
+      <ion-text color="medium">Total Price</ion-text>
+      <h2 slot="end" class="total-price">500/-</h2>
+    </ion-item>
+  </ion-card-content>
+</ion-card>

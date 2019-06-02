@@ -17,4 +17,11 @@ export class UtilsService {
     return headers;
   }
 
+  getColorMappingForTicket(ticket): string {
+    if(ticket.half > 0){
+
+    }
+    return 'color';
+  }
+
 }

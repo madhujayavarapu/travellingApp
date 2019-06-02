@@ -1,4 +1,4 @@
-import { TicketComponent } from './../../components/ticket/ticket.component';
+import { SharedModule } from './../../utils/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,13 +6,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TicketsPage } from './tickets.page';
-import { SharedModule } from '../../utils/shared.module';
+import { AboutPage } from './about.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: TicketsPage
+    component: AboutPage
   }
 ];
 
@@ -24,6 +23,6 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [TicketsPage, TicketComponent]
+  declarations: [AboutPage]
 })
-export class TicketsPageModule {}
+export class AboutPageModule {}

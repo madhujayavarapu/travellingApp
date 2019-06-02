@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BusService } from 'src/app/services/bus.service';
-import { NotificationService } from 'src/app/services/notifications/notification.service';
+import { BusService } from '../../services/bus.service';
+import { NotificationService } from '../../services/notifications/notification.service';
 import { ModalController } from '@ionic/angular';
 import { ModalPagePage } from '../modal-page/modal-page.page';
 
@@ -16,8 +16,8 @@ export class SeatSelectionPage{
   busNumber: string;
   boardingPoint: string;
   droppingPoint: string;
-  boardingPoints: any = [];
-  droppingPoints: any = [];
+  boardingPoints: string[] = [];
+  droppingPoints: string[] = [];
 
   noBuses: boolean = false;
 
@@ -33,7 +33,7 @@ export class SeatSelectionPage{
   }
 
   ionViewWillEnter() {
-    // this.getBoardingPoints();
+    this.getBoardingPoints();
     this.resetFields();
   }
 
@@ -51,7 +51,6 @@ export class SeatSelectionPage{
         this.noBuses = true;
       }
     },(err) => {
-      console.log(err);
       this.notificationSrv.showToastMessage(err.msg, 'top');
     })
   }
@@ -63,32 +62,25 @@ export class SeatSelectionPage{
       boardingPoint: this.boardingPoint
     }
     this.droppingPoints = [];
-    // this.busSrv.getDroppingPointsList(postData)
-    // .subscribe((res) => {
-    //   if(res.status){
-    //     this.droppingPoints = res.data;
-    //     if(this.droppingPoints.indexOf(this.droppingPoint) == -1){
-    //       this.droppingPoint = "-1";
-    //     }
-    //   }else{
-    //     this.notificationSrv.showToastMessage(res.msg, 'top');
-    //   }
-    // },(err)=> {
-    //   console.log(err);
-    //   this.notificationSrv.showToastMessage(err.msg, 'top');
-    // })
+    this.droppingPoint = "-1";
+    this.busSrv.getDroppingPointsList(postData)
+    .subscribe((res) => {
+      if(res.status){
+        this.droppingPoints = res.data;
+        // if(this.droppingPoints.indexOf(this.droppingPoint) == -1){
+        //   this.droppingPoint = "-1";
+        // }
+      }else{
+        this.notificationSrv.showToastMessage(res.msg, 'top');
+      }
+    },(err)=> {
+      console.log(err);
+      this.notificationSrv.showToastMessage(err.msg, 'top');
+    })
   }
 
-  async getSeats() {
+  getSeats() {
     if(this.boardingPoint !== "-1" && this.droppingPoint !== "-1"){
-      // const modal = await this.modalCtrl.create({
-      //   component: ModalPagePage,
-      //   showBackdrop: true,
-      //   backdropDismiss: false,
-      //   cssClass: 'custom-modal'
-      // });
-      // modal.present();
-      // this.notificationSrv.showToastMessage("Need to show seat selection", 'top');
       this.router.navigate(['','seats', this.selectedRoute, this.busNumber, this.boardingPoint, this.droppingPoint])
     }else{
       this.notificationSrv.showToastMessage("Please select boarding point and dropping point", 'top');

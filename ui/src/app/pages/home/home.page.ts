@@ -52,10 +52,18 @@ export class HomePage {
 
   getSeatSelection() {
     if(this.wt != "-1" && !!this.busNumber && this.busNumber != ""){
-      if(this.busNumber !== "AP16CY2872")
-        this.notificationSrv.showToastMessage('Please enter valid bus number', 'top');
-      else
-        this.router.navigate(['', 'seat-selection', this.wt, this.busNumber]);      
+      let postData = {route: this.wt, busNumber: this.busNumber};
+      this.busSrv.getBusDetails(postData)
+      .subscribe((res) => {
+        if(!!res.status){
+          this.router.navigate(['', 'seat-selection', this.wt, this.busNumber]); 
+        }else{
+          this.notificationSrv.showToastMessage(res.msg, 'top');
+        }
+      },(err) => {
+        console.log(err);
+        this.notificationSrv.showToastMessage(err.msg, 'top');
+      })
     }else {
       this.notificationSrv.showToastMessage('Please select route and bus number', 'top');
     }

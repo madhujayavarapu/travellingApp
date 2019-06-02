@@ -1,7 +1,7 @@
 <app-header title="Profile" [backBtn]="false"></app-header>
-<ion-content padding>
+<ion-content>
     <app-refresher (onRefresh)="pageRefreshed($event)"></app-refresher>
-    <ion-card>
+    <!-- <ion-card>
       <ion-card-content *ngIf="!!userDetails">
         <input type="file" style="display:none" (change)="updateProfilePic($event)" name="image" 
            #fileButton/>
@@ -16,5 +16,58 @@
       <ion-card-content *ngIf="!userDetails">
         <ion-skeleton-text width="500px" height="300px"></ion-skeleton-text>
       </ion-card-content>
-    </ion-card>
+    </ion-card> -->
+    <ion-skeleton-text *ngIf="!userDetails" width="500px" height="300px"></ion-skeleton-text>
+    
+    <div *ngIf="!!userDetails">
+      <input type="file" style="display:none" (change)="updateProfilePic($event)" name="image" 
+      #fileButton/>
+      <ion-item-group>
+        <ion-item>
+          <ion-avatar slot="start" (click)="chooseFile()">
+            <img [src]="userDetails.profilePic">
+          </ion-avatar>
+          <ion-label color="dark">
+            <b>{{userDetails.displayName}}</b>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+        <ion-icon name="person"></ion-icon> &nbsp;
+        <ion-label><strong>Male</strong></ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="mail"></ion-icon> &nbsp;
+        <ion-label><strong>abc@gmail.com</strong></ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="call"></ion-icon> &nbsp;
+        <ion-label><strong>999999999</strong></ion-label>
+      </ion-item>
+      </ion-item-group>
+      <ion-list>
+        <ion-item [routerLink]="['','tabs', 'tickets']">
+          <ion-icon name="bookmark"></ion-icon> &nbsp;
+          Your Tickets
+        </ion-item>
+        <ion-item>
+          <ion-icon name="create"></ion-icon>&nbsp; Change Details
+        </ion-item>
+        <ion-item>
+          <ion-icon name="information-circle"></ion-icon>&nbsp; Terms & Conditions
+        </ion-item>
+        <ion-item>
+          <ion-icon name="star"></ion-icon> &nbsp; Rate Our App (not implemented)
+        </ion-item>
+        <ion-item>
+          <ion-icon name="share"></ion-icon>&nbsp; Share (not implemented)
+        </ion-item>
+        
+        <ion-item (click)="logOut()">
+          <ion-icon name="log-out"></ion-icon> &nbsp; Log Out
+        </ion-item>
+      </ion-list>
+      <!-- <ion-thumbnail size="10" (click)="chooseFile()">
+        <img [src]="userDetails.profilePic" />
+      </ion-thumbnail> -->
+    </div>
 </ion-content>

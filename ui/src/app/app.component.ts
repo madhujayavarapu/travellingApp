@@ -54,11 +54,11 @@ export class AppComponent {
       // this.statusBar.styleLightContent();
       this.splashScreen.hide();
 
-      // Network.onConnect().subscribe(() => {
+      // this.network.onConnect().subscribe(() => {
       //   this.notificationSrv.showToastMessage('Connected to Network', 5000);
       // })
 
-      // Network.onDisconnect().subscribe(() => {
+      // this.network.onDisconnect().subscribe(() => {
       //   this.notificationSrv.showAlert('Network', 'Network Error', 'Please connect to network', ['Ok']);
       // })
       // Offline event

@@ -65,7 +65,7 @@ function getBusDetails(req, res, next) {
   models.BusDetails.find({route: req.body.route, bus_number: req.body.busNumber}, (err, busDetails) => {
     if(err){
       res.json({status: false, msg: "Something went wrong", error: err});
-    }else if(!!busDetails) {
+    }else if(!!busDetails && busDetails.length > 0) {
       res.json({status: true, data: busDetails})
     }else{
       res.json({status: false, msg: "Not found Bus with Bus number "+req.body.busNumber});
@@ -151,7 +151,7 @@ function getBoardingPoints(req, res, next) {
     if(err){
       res.json({status: false, msg: "something went wrong", error: err});
     }else if(busDetails.length > 0){
-      res.json({status: true, msg: "bus details found", data: busDetails[0].stops});
+      res.json({status: true, msg: "bus details found", data: busDetails[0].stops.slice(0, -1)});
     }else{
       res.json({status: false, msg: 'failed to fetch bus details..check the bus number and try again'});
     }

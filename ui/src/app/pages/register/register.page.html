@@ -8,20 +8,28 @@
         <ion-label position="floating">Username</ion-label>
         <ion-input readonly [(ngModel)]="username" name="username"></ion-input>
       </ion-item>
-      <ion-row>
-        <ion-col size="6">
+      <!-- <ion-row>
+        <ion-col size="6"> -->
           <ion-item class="field">
-            <ion-label position="floating">Name</ion-label>
-            <ion-input [(ngModel)]="fullName" placeholder="Enter Name" name="name"></ion-input>
+            <ion-label position="floating">Enter Name</ion-label>
+            <ion-input [(ngModel)]="fullName" name="name"></ion-input>
           </ion-item>
-        </ion-col>
-        <ion-col size="6">
-          <ion-item class="field">
+        <!-- </ion-col>
+        <ion-col size="6"> -->
+          <!-- <ion-item class="field gender-field">
             <img [src]="maleImg" width="30" height="25" (click)="changeGender('M')" />
             <img [src]="femaleImg" width="30" height="25" (click)="changeGender('F')" />
+          </ion-item> -->
+          <ion-item class="field">
+            <ion-label position="floating">Gender</ion-label>
+            <ion-select placeholder="Select Gender" [(ngModel)]="gender">
+              <ion-select-option value="-1">Select Gender</ion-select-option>
+              <ion-select-option value="M">Male</ion-select-option>
+              <ion-select-option value="F">Female</ion-select-option>
+            </ion-select>
           </ion-item>
-        </ion-col>
-      </ion-row>
+        <!-- </ion-col>
+      </ion-row> -->
       <ion-item class="field">
         <ion-label position="floating">Password</ion-label>
         <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>

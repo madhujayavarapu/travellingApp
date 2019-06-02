@@ -1,7 +1,8 @@
+import { MAX_SEATS_PER_USER } from './../../constants/proj.constant';
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BusService } from 'src/app/services/bus.service';
-import { NotificationService } from 'src/app/services/notifications/notification.service';
+import { BusService } from '../../services/bus.service';
+import { NotificationService } from '../../services/notifications/notification.service';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { ModalPagePage } from '../modal-page/modal-page.page';
 
@@ -56,27 +57,28 @@ export class SeatsPage {
     });
     await loader.present();
 
-    let data = {
-      halfTicketPrice: 300,
-      fullTicketPrice: 450,
-      seniorCitizenPrice: 380
-    }
-    this.fairDetails = this.formatFairDetails(data);
-    setTimeout(() => {
+    // let data = {
+    //   halfTicketPrice: 300,
+    //   fullTicketPrice: 450,
+    //   seniorCitizenPrice: 380
+    // }
+    // this.fairDetails = this.formatFairDetails(data);
+    // setTimeout(() => {
+    //   loader.dismiss();
+    // },500)
+    this.busSrv.getFareDetailsForTrip(postData)
+    .subscribe((res) => {
       loader.dismiss();
-    },500)
-    // this.busSrv.getFareDetailsForTrip(postData)
-    // .subscribe((res) => {
-    //   loader.dismiss();
-    //   if(!!res.status){
-    //     this.fairDetails = this.formatFairDetails(res.data);
-    //   }else{
-    //     this.notificationSrv.showToastMessage(res.msg,'top');
-    //   }
-    // },(err) => {
-    //   loader.dismiss();
-    //   this.notificationSrv.showToastMessage(err.msg, 'top');
-    // })
+      if(!!res.status){
+        this.fairDetails = this.formatFairDetails(res.data);
+        console.log(this.fairDetails);
+      }else{
+        this.notificationSrv.showToastMessage(res.msg,'top');
+      }
+    },(err) => {
+      loader.dismiss();
+      this.notificationSrv.showToastMessage(err.msg, 'top');
+    })
   }
 
   async checkout() {
@@ -98,7 +100,6 @@ export class SeatsPage {
       })
   
       modal.onWillDismiss().then((data: any) => {
-        console.log('modal closed in seats page: ',data.data.isConfirmed);
         if(data.data.isConfirmed)
           this.router.navigate(['','payment', this.selectedRoute, this.busNumber, this.boardingPoint, this.droppingPoint, this.totalPrice, this.numOfSeats]);
         else 
@@ -111,7 +112,7 @@ export class SeatsPage {
   }
 
   changeSeatCount(action, ticket){
-    if(action == 'checkbox'){
+    if(action == 'checkbox'  && (!ticket.isChecked || this.numOfSeats < MAX_SEATS_PER_USER)){
       if(!ticket.isChecked){
         this.totalPrice -= (ticket.count * ticket.price);
         this.numOfSeats -= ticket.count;
@@ -121,19 +122,27 @@ export class SeatsPage {
         ticket.count = 1;
         this.totalPrice += ticket.price;
       }
-    }else if(action == 'increment'){
+    }else if(action == 'increment' && this.numOfSeats < MAX_SEATS_PER_USER){
       this.numOfSeats += 1;
       ticket.count += 1;
       this.totalPrice += ticket.price;
       ticket.isChecked = true;
-    }else {
+    }else if(action === 'decrement'){
       this.numOfSeats = this.numOfSeats > 0 ? this.numOfSeats - 1 : 0;
       ticket.count = ticket.count > 0 ? ticket.count - 1 : 0;
       this.totalPrice = this.totalPrice > 0 ? this.totalPrice - ticket.price : 0;
       ticket.isChecked = ticket.count > 0 ? true : false;
+    }else if(this.numOfSeats >= MAX_SEATS_PER_USER) {
+      this.notificationSrv.showToastMessage('Max Limit is 6', 'top');
     }
     if(ticket.type == 'Senior Citizen'){
       this.catCardsCount = ticket.count;
+      this.catCardsDetails = [];
+      for(let i=0;i<this.catCardsCount;i++){
+        let obj:any = {};
+        obj.model = 'catcard-'+i;
+        this.catCardsDetails.push(obj);
+      }
     }
   }
 

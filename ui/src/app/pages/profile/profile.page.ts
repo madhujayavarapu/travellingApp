@@ -1,5 +1,7 @@
+import { UserService } from './../../services/user/user.service';
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/services/notifications/notification.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,11 +15,12 @@ export class ProfilePage {
   profilePic: string = '';
 
   constructor(
-    private router: Router
+    private router: Router,
+    private userSrv: UserService,
+    private notificationSrv: NotificationService
   ) { }
 
   ionViewWillEnter() {
-    console.log("view entered need to fetch the user details");
     this.getUserInfo();
   }
 
@@ -26,14 +29,19 @@ export class ProfilePage {
   }
 
   getUserInfo() {
+    this.userSrv.getCurrentUserDetails('storedDetailsAll').subscribe((res) => {
+      console.log(res);
+    });
     this.userDetails = {
       displayName: "Test User",
       profilePic: 'assets/images/default.jpeg'
     }
+
   }
 
   pageRefreshed(event) {
-    console.log("page refreshed: ",event);
+    // console.log("page refreshed: ",event);
+    this.getUserInfo();
   }
 
 
@@ -43,17 +51,9 @@ export class ProfilePage {
   }
 
   logOut(){
+    this.userSrv.logout();
+    this.notificationSrv.showToastMessage('Logged Out!!', 'top');
     this.router.navigate(['', 'login']);
-    // this.userSrv.logOutUser().then((res) => {
-    //   if(res) {
-    //     this.notificationsSrv.showToastMessage('Logged Out!!', 'top');
-    //     this.router.navigate(['', 'login']);
-    //   }else {
-    //     this.notificationsSrv.showToastMessage('Something went wrong', 'top');
-    //   }
-    // }).catch((err) => {
-    //   this.notificationsSrv.showToastMessage(err.message, 'top');
-    // })
   }
 
 }

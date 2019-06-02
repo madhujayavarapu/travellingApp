@@ -9,14 +9,11 @@
   </div>
   <div *ngIf="!noBuses">
     <ion-list>
-      <!-- <ion-list-header>askdjkfl</ion-list-header> -->
-
       <ion-item>
         <ion-label>Boarding Point</ion-label>
         <ion-select [(ngModel)]="boardingPoint" (ionChange)="getDroppingPoints()">
           <ion-select-option value="-1">Select Boarding Point</ion-select-option>
-          <ion-select-option  value="kphb colony">kphb colony</ion-select-option>
-          <!-- <ion-select-option value="{{option}}" *ngFor="let option of boardingPoints">{{option}}</ion-select-option> -->
+          <ion-select-option value="{{option}}" *ngFor="let option of boardingPoints">{{option}}</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -24,8 +21,7 @@
         <ion-label>Dropping Point</ion-label>
         <ion-select [(ngModel)]="droppingPoint" [disabled]="boardingPoint == '-1'">
           <ion-select-option value="-1">Select Dropping Point</ion-select-option>
-          <ion-select-option value="nuzvid">Nuzvid</ion-select-option>
-          <!-- <ion-select-option value="{{option}}" *ngFor="let option of droppingPoints">{{option}}</ion-select-option> -->
+          <ion-select-option value="{{option}}" *ngFor="let option of droppingPoints">{{option}}</ion-select-option>
         </ion-select>
       </ion-item>
       <br/>

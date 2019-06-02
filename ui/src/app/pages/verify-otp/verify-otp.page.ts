@@ -78,12 +78,17 @@ export class VerifyOtpPage {
         this.otpSent = true;
         this.submitText = "Validate OTP";
         this.note = "Sent OTP to your username.";
+        // this.startTimer(2);
       }else{
         this.notificationSrv.showToastMessage(res.msg, 'top');
       }
     },(err) => {
       this.notificationSrv.showToastMessage(err.msg, 'top');
     })
+  }
+
+  startTimer(time) {
+    let timeInSeconds = time * 60;
   }
 
   validateOtp() {

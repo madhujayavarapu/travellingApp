@@ -9,7 +9,8 @@ var service = {
     insertuser: insertuser,
     verifyUsername: verifyUsername,
     validateOTP: validateOTP,
-    authenticateUser: authenticateUser
+    authenticateUser: authenticateUser,
+    getUserInfo: getUserInfo
 }
 
 module.exports = service;
@@ -112,4 +113,20 @@ function insertuser(req, res, next){
         }
       }
     })
+}
+
+function getUserInfo(req, res, next) {
+  var userId = req.body._id;
+  models.User.findById(userId, (err, data) => {
+    if(err){
+      // next(err);
+      res.json({status: false, data: err});
+    }else{
+      if(!!data){
+        res.json({status: true, data: data});
+      }else{
+        res.json({status: false, data: null});
+      }
+    }
+  })
 }
