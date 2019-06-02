@@ -24,27 +24,24 @@ function generateOtp(length, isUppercase, isAlphabates, isSpecialChars) {
 }
 
 function sendSms(type, mobileNumber, otp) {
-  console.log("need to send sms,and otp is", otp,mobileNumber);
-  client.get("http://198.15.103.106/API/pushsms.aspx?loginID=INNOVATION&password=123456&mobile="+mobileNumber+"&text=Hi madhu sms is fine,Requested OTP is :"+otp+"&senderid=DEMOOO&route_id=1&Unicode=0", function (data, response) {
-    
+  client.get("http://198.15.103.106/API/pushsms.aspx?loginID=INNOVATION&password=123456&mobile="+mobileNumber+"&text=Please find your requested OTP is :"+otp+"&senderid=DEMOOO&route_id=1&Unicode=0", function (data, response) {
 });
 return true;
 }
 
-function sendMail(mail, otp) {
-  console.log(mail, otp);
+function sendMail(type,email,otp) {
   var smtpTransport = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: "",
-        pass: ""
+        user: "ceozeroinnovationtechnology@gmail.com",
+        pass: "DeepakDille123"
     }
   });
   smtpTransport.sendMail({
-  from: "", // sender address
-  to: mail, // comma separated list of receivers
-  subject: "Testing sending using gmail", // Subject line
-  text: otp // plaintext body
+  from: "ceozeroinnovationtechnology@gmail.com", // sender address
+  to: email, // comma separated list of receivers
+  subject: "Please don't share your OTP", // Subject line
+  text: "Your OTP is : "+otp // plaintext body
   }, function(error, response){
       if(error){
           console.log(error);

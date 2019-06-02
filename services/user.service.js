@@ -34,14 +34,13 @@ function authenticateUser(req, res, next) {
 function verifyUsername(req, res, next) {
   let username = req.body.username;
   let usernameType = req.body.usernameType;
-  if(!!username && validater.validateUsername(username, usernameType)){
+    if(!!username && validater.validateUsername(username, usernameType)){
     let otp = utils.generateOtp(6, false, false, false);
     let otpservice = usernameType == 'mobile' ? utils.sendSms : utils.sendMail;
     var userdetailotp = new models.OtpUser({
       "username" : username,
       "otp" : otp,
-      "timestamp" :  moment(),
-      "gender":req.body.gender
+      "timestamp" :  moment()
     });
     userdetailotp.save(userdetailotp, (err, isSaved) => {
       if(err)
