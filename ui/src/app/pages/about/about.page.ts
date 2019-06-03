@@ -1,3 +1,4 @@
+import { CONTACT_INFO } from './../../constants/proj.constant';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about.page.scss'],
 })
 export class AboutPage implements OnInit {
+
+  contactInfo: any = CONTACT_INFO || {};
 
   constructor() { }
 

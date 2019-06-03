@@ -1,3 +1,5 @@
+import { UserService } from './../../services/user/user.service';
+import { TicketService } from './../../services/ticket.service';
 import { MAX_SEATS_PER_USER } from './../../constants/proj.constant';
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -30,7 +32,9 @@ export class SeatsPage {
     private busSrv: BusService,
     private notificationSrv: NotificationService,
     private loadingCtrl: LoadingController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private ticketSrv: TicketService,
+    private userSrv: UserService
   ) {
     this.busNumber = route.snapshot.params['busNumber'];
     this.selectedRoute = route.snapshot.params['route'];
@@ -100,10 +104,31 @@ export class SeatsPage {
       })
   
       modal.onWillDismiss().then((data: any) => {
-        if(data.data.isConfirmed)
-          this.router.navigate(['','payment', this.selectedRoute, this.busNumber, this.boardingPoint, this.droppingPoint, this.totalPrice, this.numOfSeats]);
-        else 
+        if(data.data.isConfirmed){
+          this.userSrv.getCurrentUserDetails('_id').subscribe((currentUserId) => {
+            let ticketsInfo = this.getTicketsInfo(this.fairDetails);
+            let postData = {
+              userId: currentUserId,
+              ticketInfo: {
+                ...ticketsInfo,
+                route: this.selectedRoute,
+                busNumber: this.busNumber,
+                boardingPoint: this.boardingPoint,
+                droppingPoint: this.droppingPoint,
+                totalPrice: this.totalPrice
+              }
+            }
+            this.ticketSrv.bookTicketForUser(postData).subscribe((res) => {
+              this.notificationSrv.showToastMessage(res.msg, 'top');
+              this.router.navigate(['', 'tabs', 'tickets']);
+            },(err) => {
+              this.notificationSrv.showToastMessage(err.msg, 'top');
+            })
+          })
+          // this.router.navigate(['','payment', this.selectedRoute, this.busNumber, this.boardingPoint, this.droppingPoint, this.totalPrice, this.numOfSeats]);
+        }else {
           this.notificationSrv.showToastMessage('Want to change tickets','top');
+        }
       })
       return await modal.present();
     }else{
@@ -164,5 +189,13 @@ export class SeatsPage {
       arr.push(obj);
     }
     return arr;
+  }
+
+  getTicketsInfo(details) {
+    let d = {};
+    details.forEach((ticket) => {
+      d[ticket.type] = ticket.count;
+    })
+    return d;
   }
 }

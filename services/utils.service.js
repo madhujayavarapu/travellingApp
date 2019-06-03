@@ -5,6 +5,8 @@ const moment = require('moment');
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
+var projConstants = require('../constants/proj.constant');
+
 var service = {
   generateOtp: generateOtp,
   sendSms: sendSms,
@@ -25,20 +27,20 @@ function generateOtp(length, isUppercase, isAlphabates, isSpecialChars) {
 
 function sendSms(type, mobileNumber, otp) {
   client.get("http://198.15.103.106/API/pushsms.aspx?loginID=INNOVATION&password=123456&mobile="+mobileNumber+"&text=Please find your requested OTP is :"+otp+"&senderid=DEMOOO&route_id=1&Unicode=0", function (data, response) {
-});
-return true;
+  });
+  return true;
 }
 
 function sendMail(type,email,otp) {
   var smtpTransport = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: "ceozeroinnovationtechnology@gmail.com",
-        pass: "DeepakDille123"
+        user: projConstants.SENDER_MAIL,
+        pass: projConstants.SENDER_MAIL_PASSWORD
     }
   });
   smtpTransport.sendMail({
-  from: "ceozeroinnovationtechnology@gmail.com", // sender address
+  from: projConstants.SENDER_MAIL, // sender address
   to: email, // comma separated list of receivers
   subject: "Please don't share your OTP", // Subject line
   text: "Your OTP is : "+otp // plaintext body

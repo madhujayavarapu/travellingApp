@@ -24,7 +24,7 @@ export class UserService {
   }
 
   addUserDetails(newUserDetails): Observable<any> {
-    return this.http.post(URL+"users/createUser", newUserDetails, {headers:this.getHeaders()}).pipe((map((res) => res.json())));
+    return this.http.post(URL+"createUser", newUserDetails, {headers:this.getHeaders()}).pipe((map((res) => res.json())));
   }
 
   authenticateUser(creadentials): Observable<any> {

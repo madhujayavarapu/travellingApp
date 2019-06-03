@@ -43,7 +43,9 @@ function verifyUsername(req, res, next) {
       "otp" : otp,
       "timestamp" :  moment()
     });
-    userdetailotp.save(userdetailotp, (err, isSaved) => {
+    let query = {username: username};
+    let update = {otp: otp, timestamp: moment()};
+    models.OtpUser.findOneAndUpdate(query, update, {upsert:true, new: true, setDefaultsOnInsert: true}, (err, isSaved) => {
       if(err)
         res.json({status: false, msg: 'Something went wrong while saving otp to db'});
       else if(isSaved){
@@ -117,7 +119,7 @@ function insertuser(req, res, next){
 
 function getUserInfo(req, res, next) {
   var userId = req.body._id;
-  models.User.findById(userId, (err, data) => {
+  models.User.findById(userId, {password: 0}, (err, data) => {
     if(err){
       // next(err);
       res.json({status: false, data: err});

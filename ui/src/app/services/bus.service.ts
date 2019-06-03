@@ -34,7 +34,8 @@ export class BusService {
   getBusDetails(postData): Observable<any> {
     return this.http.post(URL+"getBusDetails",postData, {headers: this.utilsSrv.getHeaders()}).pipe((map((res) => res.json())));
   }
-  payment():Observable<any>{
-    return this.http.post(URL+"checksumpayment").pipe((map((res) => res)));
+
+  payment(postData):Observable<any>{
+    return this.http.post(URL+"checksumpayment",postData, {headers: this.utilsSrv.getHeaders()}).pipe((map((res) => res.json())));
   }
 }

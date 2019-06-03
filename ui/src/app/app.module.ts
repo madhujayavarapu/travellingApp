@@ -1,3 +1,4 @@
+import { TicketService } from './services/ticket.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -33,6 +34,7 @@ import { BusService } from './services/bus.service';
     SplashScreen,
     UserService,
     NotificationService,
+    TicketService,
     BusService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

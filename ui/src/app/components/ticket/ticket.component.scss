@@ -1,17 +1,32 @@
-.half-full-ticket-color {
-    background-color: #3F51B5;
+.expired_background_color{
+    background-color: '#757575';
 }
-.half-senior-ticket-color {
-    background-color: #FF7043
+.normal_backgroud_color{
+    background-color: '#FFF';
 }
-.full-senior-ticket-color {
-    background-color: #607D8B;
+.half_background_color{
+    background-color: '';
 }
-.half-full-senior-ticket-color {
-    background-color: #8D6E63;
+.full_background_color{
+    background-color: '';
 }
-.expired-ticket-color {
-    background-color: #757575;   
+.senior_background_color{
+    background-color: '';
+}
+.half_full_background_color{
+    --background: '#3F51B5' !important;
+}
+.full_senior_background_color{
+    background-color: '#607D8B';
+}
+.half_senior_background_color{
+    background-color: '#FF7043';
+}
+.half_full_senior_background_color{
+    background-color: '#8D6E63';
+}
+.cancelled_background_color{
+    background-color: '';
 }
  
 //half -   warning

@@ -1,4 +1,7 @@
+import { UserService } from './../../services/user/user.service';
 import { Component } from '@angular/core';
+import { TicketService } from 'src/app/services/ticket.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-tickets',
@@ -9,69 +12,41 @@ export class TicketsPage {
 
   ticketColor: string = "primary";
   currentSegment: string = 'current';
-  tickets: Array<any> = [
-    {
-      ticketInfo: {
-        half: 1,
-        full: 2
-      }
-    },
-    {
-      ticketInfo: {
-        full: 2,
-        senior: 1
-      }
-    },
-    {
-      ticketInfo: {
-        full: 2,
-        half: 1
-      }
-    },
-    {
-      ticketInfo: {
-        full: 2,
-        senior: 1,
-        half: 1
-      }
-    },
-    {
-      ticketInfo: {
-        half: 2,
-        senior: 1
-      }
-    },
-    {
-      ticketInfo: {
-        half: 1
-      }
-    },
-    {
-      ticketInfo: {
-        senior: 1
-      }
-    },
-    {
-      ticketInfo: {
-        full: 2
-      }
-    }
-  ];
+  tickets: Array<any> = [];
 
-  constructor() { }
+  constructor(
+    private userSrv: UserService,
+    private ticketSrv: TicketService
+  ) { }
 
   ionViewWillEnter(){
-    this.getCurrentTickets();
+    this.getAllTicketsOfUser('current');
+  }
+
+  getAllTicketsOfUser(type) {
+    this.userSrv.getCurrentUserDetails('_id').subscribe((currentUserId) => {
+      let postData = {userId: currentUserId};
+      this.ticketSrv.getAllTicketsOfUser(postData).subscribe((res) => {
+        this.tickets = !isNullOrUndefined(res.tickets) ? res.tickets : [];
+        if(type == 'current'){
+          this.getCurrentTickets();
+        }else{
+          this.getPastTickets();
+        }
+      }, (err) => {
+        this.tickets = [];
+      })
+    })
   }
 
   segmentChanged(ev) {
     this.currentSegment = ev.detail.value;
     switch(ev.detail.value) {
       case 'current':
-        this.getCurrentTickets();
+        this.getAllTicketsOfUser('current');
         break;
       case 'past':
-        this.getPastTickets();
+        this.getAllTicketsOfUser('past');
         break;
       default:
         console.log('want to add more');
@@ -80,12 +55,11 @@ export class TicketsPage {
   }
 
   getCurrentTickets() {
-    console.log('current ticket details');
-    this.tickets = this.mapColorsToTickets(this.tickets);
+    this.tickets = this.tickets.filter((ticket) => ticket.color !== 'dark');
   }
 
   getPastTickets() {
-    console.log('past ticket details');
+    this.tickets = this.tickets.filter((ticket) => ticket.color === 'dark');
   }
 
   mapColorsToTickets(tickets) {

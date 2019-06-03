@@ -1,7 +1,7 @@
 <app-header title="Tickets" [backBtn]="false"></app-header>
-<ion-content padding>
+
+<ion-content>
   <ion-toolbar>
-      <!--  -->
     <ion-segment [value]="currentSegment" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="current">
         <ion-label>Current</ion-label>
@@ -11,7 +11,7 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-  <div appTickets [tickets]="tickets"></div>
+  <div appTickets [tickets]="tickets" class="tickets-container"></div>
 
 <!-- 
   <ion-card [color]="ticketColor" padding>

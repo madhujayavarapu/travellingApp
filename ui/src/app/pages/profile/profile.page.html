@@ -24,24 +24,40 @@
       #fileButton/>
       <ion-item-group>
         <ion-item>
-          <ion-avatar slot="start" (click)="chooseFile()">
-            <img [src]="userDetails.profilePic">
+            <!-- (click)="chooseFile()" -->
+          <ion-avatar slot="start">
+            <img [src]="userDetails.profilePic ? userDetails.profilePic : defaultProfilePic">
           </ion-avatar>
           <ion-label color="dark">
-            <b>{{userDetails.displayName}}</b>
+            <b>{{userDetails?.name}}</b>
           </ion-label>
         </ion-item>
         <ion-item>
         <ion-icon name="person"></ion-icon> &nbsp;
-        <ion-label><strong>Male</strong></ion-label>
+        <ion-label><strong>
+          <span *ngIf="userDetails?.gender == 'M'">Male</span>
+          <span *ngIf="userDetails?.gender == 'F'">Female</span>
+          <span *ngIf="userDetails?.gender !== 'F' && userDetails?.gender !== 'M'">-</span>
+          </strong>
+        </ion-label>
       </ion-item>
       <ion-item>
         <ion-icon name="mail"></ion-icon> &nbsp;
-        <ion-label><strong>abc@gmail.com</strong></ion-label>
+        <ion-label>
+          <strong>
+            <span *ngIf="userDetails?.username.indexOf('@') !== -1">{{userDetails?.username}}</span>
+            <span *ngIf="userDetails?.username.indexOf('@') === -1">-</span>
+          </strong>
+        </ion-label>
       </ion-item>
       <ion-item>
         <ion-icon name="call"></ion-icon> &nbsp;
-        <ion-label><strong>999999999</strong></ion-label>
+        <ion-label>
+          <strong>
+            <span *ngIf="userDetails?.username.indexOf('@') === -1">{{userDetails?.username}}</span>
+            <span *ngIf="userDetails?.username.indexOf('@') !== -1">-</span>
+          </strong>
+        </ion-label>
       </ion-item>
       </ion-item-group>
       <ion-list>

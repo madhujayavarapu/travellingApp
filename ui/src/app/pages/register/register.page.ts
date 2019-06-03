@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user/user.service';
 import { Component } from '@angular/core';
 // import { UserService } from '../../services/user/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -26,10 +27,10 @@ export class RegisterPage {
     private router: Router,
     private route: ActivatedRoute,
     private notificationsSrv: NotificationService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private userSrv: UserService
   ) {
     this.username = route.snapshot.params['username'];
-    console.log(this.username);
    }
 
   ionViewWillEnter() {
@@ -74,25 +75,28 @@ export class RegisterPage {
     let obj = {
       username,
       password,
-      fullName,
+      name: fullName,
       confirmpwd,
       gender
     }
-    console.log(obj);
-    this.loading.dismiss();
-    // this.userSrv.addUseDetails(obj).then((res) => {
-    //   this.loading.dismiss();
-    //   if(res){
-    //     this.notificationsSrv.showToastMessage('Details Saved','top');
-    //     this.router.navigate(['','profilepic']);
-    //   }else{
-    //     this.notificationsSrv.showToastMessage('Something went wrong..please try again', 'top');
-    //   }
-    // }).catch((err) => {
-    //   this.loading.dismiss();
-    //   this.notificationsSrv.showToastMessage(err.message, 'top');
-    //   this.resetAllFields();
-    // })
+    if(obj.password === obj.confirmpwd) {
+      this.userSrv.addUserDetails(obj).subscribe((res) => {
+        this.loading.dismiss();
+        if(res){
+          this.notificationsSrv.showToastMessage('Details Saved','top');
+
+          this.router.navigate(['','tabs', 'home']);
+        }else{
+          this.notificationsSrv.showToastMessage('Something went wrong..please try again', 'top');
+        }
+      },(err) => {
+        this.loading.dismiss();
+        this.notificationsSrv.showToastMessage(err.msg, 'top');
+        this.resetAllFields();
+      })
+    }else{
+      this.notificationsSrv.showToastMessage("Passwords doesn't match", 'top');
+    }
   }
 
   gotoLogin() {

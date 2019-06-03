@@ -1,7 +1,8 @@
+import { DEFAULT_PROFILE_PIC_URL } from './../../constants/proj.constant';
 import { UserService } from './../../services/user/user.service';
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { NotificationService } from 'src/app/services/notifications/notification.service';
+import { NotificationService } from '../../services/notifications/notification.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +14,7 @@ export class ProfilePage {
   @ViewChild('fileButton') fileButtonRef;
   userDetails;
   profilePic: string = '';
+  defaultProfilePic: string = DEFAULT_PROFILE_PIC_URL;
 
   constructor(
     private router: Router,
@@ -29,22 +31,19 @@ export class ProfilePage {
   }
 
   getUserInfo() {
-    this.userSrv.getCurrentUserDetails('storedDetailsAll').subscribe((res) => {
-      console.log(res);
+    this.userSrv.getCurrentUserDetails('all').subscribe((res) => {
+      // console.log(res);
+      if(res.status){
+        this.userDetails = res.data;
+      }
+    },(err) => {
+      console.log('err: ',err);
     });
-    this.userDetails = {
-      displayName: "Test User",
-      profilePic: 'assets/images/default.jpeg'
-    }
-
   }
 
   pageRefreshed(event) {
-    // console.log("page refreshed: ",event);
     this.getUserInfo();
   }
-
-
 
   updateProfilePic() {
     console.log("upload profile pic");

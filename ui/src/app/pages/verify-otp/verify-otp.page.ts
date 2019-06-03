@@ -1,7 +1,9 @@
+import { UtilsService } from './../../utils/utils.service';
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../services/notifications/notification.service';
+import { OTP_EXPIRE_TIME } from '../../constants/proj.constant';
 
 @Component({
   selector: 'app-verify-otp',
@@ -16,11 +18,13 @@ export class VerifyOtpPage {
   submitText: string = "Send OTP";
   note: string = "You will get an OTP to your username.";
   usernameType: string;
+  timer: string = "";
 
   constructor(
     private userSrv: UserService,
     private router: Router,
-    private notificationSrv: NotificationService
+    private notificationSrv: NotificationService,
+    private utilsSrv: UtilsService
   ) { }
 
   ionViewWillEnter() {
@@ -78,7 +82,7 @@ export class VerifyOtpPage {
         this.otpSent = true;
         this.submitText = "Validate OTP";
         this.note = "Sent OTP to your username.";
-        // this.startTimer(2);
+        this.startTimer();
       }else{
         this.notificationSrv.showToastMessage(res.msg, 'top');
       }
@@ -87,8 +91,21 @@ export class VerifyOtpPage {
     })
   }
 
-  startTimer(time) {
-    let timeInSeconds = time * 60;
+  startTimer() {
+    let timeInSeconds = OTP_EXPIRE_TIME * 60;
+    console.log(timeInSeconds);
+    var interval = setInterval(() => {
+      timeInSeconds -= 1;
+      this.timer = this.utilsSrv.convertSecondsToMinutes(timeInSeconds); 
+      // Expired OTP TIME;
+      if(timeInSeconds <= 0){
+        clearInterval(interval);
+        this.timer = 'Expired';
+        this.otpSent = false;
+        this.submitText = 'Resend OTP';
+        this.note = "OTP is Expired.Click on resend to get otp";
+      }
+    }, 1000)
   }
 
   validateOtp() {

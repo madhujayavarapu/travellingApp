@@ -1,28 +1,25 @@
 <app-header title="About" [backBtn]="false"></app-header>
 
-<ion-content padding>
+<ion-content>
  <ion-card>
    <ion-card-content>
      <ion-text color="primary"><b>About</b></ion-text><br/>
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+     Zero innovative technology is a start-up company, which is more focused towards latest technologies in  public transportation system . giving a better experience through our TICKET-TICKET solution.
    </ion-card-content>
  </ion-card>
  <ion-card>
   <ion-card-content>
     <ion-text color="primary"><b>Contact</b></ion-text><br/>
     <ion-text>
-      <ion-icon name="call"></ion-icon> 9999999999<br/>
+      <ion-icon name="call"></ion-icon> {{contactInfo?.phone}}<br/>
     </ion-text>
     <ion-text>
-      <ion-icon name="mail"></ion-icon> abc@gmail.com
+      <ion-icon name="mail"></ion-icon> {{contactInfo?.mail}} 
     </ion-text><br/><br/>
     <ion-text color="primary"><b>Office Address</b></ion-text><br/>
     <ion-text>
       <ion-icon name="business"></ion-icon>
-      Vassarlabs, Building no: 9,
-      Mindspace,
-      Hyderabad,
-      AP.
+     {{contactInfo?.address}}
     </ion-text>
   </ion-card-content>
 </ion-card>

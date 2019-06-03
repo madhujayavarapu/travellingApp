@@ -9,7 +9,7 @@ var service = {
     addBusDetails: addBusDetails,
     addPriceDetailsForRoute: addPriceDetailsForRoute,
     getBoardingPoints: getBoardingPoints,
-    getDropptingPoints: getDropptingPoints,
+    getDroppingPoints: getDroppingPoints,
     getBusDetails: getBusDetails,
     getFareDetailsForTrip: getFareDetailsForTrip
 }
@@ -158,7 +158,7 @@ function getBoardingPoints(req, res, next) {
   })
 }
 
-function getDropptingPoints(req, res, next) {
+function getDroppingPoints(req, res, next) {
   let route = req.body.route;
   let busNumber = req.body.busNumber;
   let boardingPoint = req.body.boardingPoint;
