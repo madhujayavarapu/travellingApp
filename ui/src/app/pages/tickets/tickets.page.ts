@@ -1,6 +1,6 @@
 import { UserService } from './../../services/user/user.service';
 import { Component } from '@angular/core';
-import { TicketService } from 'src/app/services/ticket.service';
+import { TicketService } from '../../services/ticket.service';
 import { isNullOrUndefined } from 'util';
 
 @Component({

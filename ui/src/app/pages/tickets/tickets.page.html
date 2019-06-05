@@ -11,7 +11,10 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-  <div appTickets [tickets]="tickets" class="tickets-container"></div>
+  <div *ngIf="tickets.length > 0" appTickets [tickets]="tickets" class="tickets-container"></div>
+  <div *ngIf="tickets.length <= 0">
+    <h4>No Tickets Found</h4>
+  </div>
 
 <!-- 
   <ion-card [color]="ticketColor" padding>

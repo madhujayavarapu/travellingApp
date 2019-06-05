@@ -58,7 +58,7 @@ function verifyUsername(req, res, next) {
       }
     })
   }else{
-    res.json({status: false, message: 'Username is not valid'});
+    res.json({status: false, msg: 'Username is not valid'});
   }
 }
 
@@ -67,19 +67,19 @@ function validateOTP(req, res, next) {
   let enteredOtp = req.body.otp;
   models.OtpUser.findOne({username: username}, (err, userDetails) => {
     if(err){
-      res.json({status: false, message: 'Some error came',error: err});
+      res.json({status: false, msg: 'Some error came',error: err});
     }else if(userDetails != null && !!userDetails){
       if(enteredOtp === userDetails.otp){
         if(utils.diffBwTimestamps(userDetails.timestamp, moment(), 'minutes') <= projConstants.OTP_EXPIRE_TIME){
-          res.json({status: true, message: 'valid otp and in time..vefied username'});
+          res.json({status: true, msg: 'valid otp and in time..vefied username'});
         }else{
-          res.json({status: true, message: 'OTP time expired'});
+          res.json({status: true, msg: 'OTP time expired'});
         }
       }else{
-        res.json({status: true, message: 'OTP is not valid'});
+        res.json({status: true, msg: 'OTP is not valid'});
       }
     }else{
-      res.json({status: false, message: 'user not found in db'});
+      res.json({status: false, msg: 'user not found in db'});
     }
   })
 }
@@ -94,7 +94,7 @@ function insertuser(req, res, next){
     models.User.findOne({username:req.body.username},(err,data) =>{
       if(err){
         console.log(err);
-        res.json({status: false, message:'Something went wrong..please try again', error: err});
+        res.json({status: false, msg:'Something went wrong..please try again', error: err});
       }else{
         if(!data){
           userdetail.save(userdetail,(err,result) => {

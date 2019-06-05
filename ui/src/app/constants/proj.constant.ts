@@ -1,6 +1,6 @@
 export const DEFAULT_PROFILE_PIC_URL: string = "assets/images/default.jpeg";
 export const MAX_SEATS_PER_USER: number = 6;
-export const OTP_EXPIRE_TIME: number = 1; // minutes.
+export const OTP_EXPIRE_TIME: number = 2; // minutes.
 
 export const CONTACT_INFO: object = {
     mail: 'ceozeroinnovationtechnology@gmail.com',

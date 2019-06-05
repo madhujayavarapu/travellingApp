@@ -55,7 +55,10 @@ export class LoginPage {
       }
       this.resetFields();
     }, (err) => {
-      this.notificationsSrv.showToastMessage(err.message, 'top');
+      if(!!err.msg)
+        this.notificationsSrv.showToastMessage(err.msg, 'top');
+      else
+        this.notificationsSrv.showToastMessage(err, 'top');
       loading.dismiss();
       this.resetFields();
     });    

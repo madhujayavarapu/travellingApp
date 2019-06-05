@@ -26,7 +26,7 @@ function generateOtp(length, isUppercase, isAlphabates, isSpecialChars) {
 }
 
 function sendSms(type, mobileNumber, otp) {
-  client.get("http://198.15.103.106/API/pushsms.aspx?loginID=INNOVATION&password=123456&mobile="+mobileNumber+"&text=Please find your requested OTP is :"+otp+"&senderid=DEMOOO&route_id=1&Unicode=0", function (data, response) {
+  client.get("http://198.15.103.106/API/pushsms.aspx?loginID="+projConstants.SMS_LOGIN_ID+"&password="+projConstants.SMS_PASSWORD+"&mobile="+mobileNumber+"&text=Please find your requested OTP is :"+otp+"&senderid=DEMOOO&route_id=1&Unicode=0", function (data, response) {
   });
   return true;
 }
